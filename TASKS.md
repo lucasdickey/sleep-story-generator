@@ -10,7 +10,7 @@
 
 ### 2. Prompt Integration
 
-- [ ] Integrate `key-to-sleep-stochastic-prompts.md` for story generation
+- [x] Integrate `key-to-sleep-stochastic-prompts.md` for story generation
 
 ### 3. Story Generation
 
