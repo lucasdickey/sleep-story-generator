@@ -4,9 +4,9 @@
 
 ### 1. Project Initialization
 
-- [ ] Set up Next.js project and repository structure
-- [ ] Add AGENTS.md and TASKS.md for team guidance
-- [ ] Configure Vercel deployment
+- [x] Set up Next.js project and repository structure
+- [x] Add AGENTS.md and TASKS.md for team guidance
+- [x] Configure Vercel deployment
 
 ### 2. Prompt Integration
 
