@@ -1,4 +1,3 @@
-export {};
 /**
  * generateArtwork.ts
  *
@@ -7,6 +6,7 @@ export {};
  * Requires OPENAI_API_KEY and OPENAI_MODEL in .env.local.
  */
 
+(async () => {
 const fs = require('fs/promises');
 const path = require('path');
 const dotenv = require('dotenv');
@@ -60,6 +60,29 @@ async function generateArtworkPrompt() {
     const outputArtworkFile = path.join(OUTPUT_DIR, `${episodeId}-artwork-prompt.txt`);
     await fs.writeFile(outputArtworkFile, artworkPromptText, 'utf8');
     console.log(`Artwork prompt saved to ${outputArtworkFile}`);
+
+    // Generate artwork image using OpenAI's image API (DALL·E)
+    try {
+      // Truncate and clean prompt to fit OpenAI image API requirements
+      const promptForImage = artworkPromptText.replace(/\s+/g, ' ').slice(0, 1000);
+      const imageResponse = await openai.images.generate({
+        model: "gpt-image-1",
+        prompt: promptForImage,
+        n: 1,
+        size: "1024x1024"
+      });
+      const b64 = imageResponse.data[0]?.b64_json;
+      if (b64) {
+        const buffer = Buffer.from(b64, 'base64');
+        const outputImageFile = path.join(OUTPUT_DIR, `${episodeId}-artwork.png`);
+        await fs.writeFile(outputImageFile, buffer);
+        console.log(`Artwork image saved to ${outputImageFile}`);
+      } else {
+        console.error("No image returned from OpenAI image API.");
+      }
+    } catch (err) {
+      console.error("Error generating or saving artwork image:", err);
+    }
   } catch (err) {
     console.error('Error generating artwork prompt:', err);
     process.exit(1);
@@ -67,3 +90,4 @@ async function generateArtworkPrompt() {
 }
 
 generateArtworkPrompt();
+})();

@@ -2,17 +2,14 @@ Before you begin, review the following reference artwork images for inspiration 
 - prompts/reference_artwork/Danika_and_the_tortoise.png
 - prompts/reference_artwork/appalachian-path-torest.png
 - prompts/reference_artwork/boy-and-his-dog.png
-- prompts/reference_artwork/elena-and-the-tundra.png
-- prompts/reference_artwork/elias-and-the-fox-canopy.png
 
 Create a square (1:1 aspect ratio) digital illustration for a sleep podcast episode called “Key to Sleep.” The artwork should be directly inspired by the content of the generated story and episode description.
 
 Instructions:
-- Match the environment, visual mood, character(s), and tone of the story described in the prompts above.
 - Maintain stylistic consistency with other “Key to Sleep” visuals:
   - Vintage poster-inspired look
   - Bold outlines
   - Muted, warm color palette
   - Emotionally serene atmosphere
   - Posterized lighting, gentle textures
-- Character should be wearing an APES ON KEYS hoodie or t-shirt OR an A-OK fitted baseball cap
+- Character is wearing an APES ON KEYS hoodie OR an A-OK fitted cap

@@ -1,4 +1,3 @@
-export {};
 /**
  * generateAudio.ts
  *
@@ -7,15 +6,16 @@ export {};
  * Requires ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID in .env.local.
  */
 
-const fs = require('fs/promises');
-const path = require('path');
-const dotenv = require('dotenv');
+(async () => {
+  const fs = require('fs/promises');
+  const path = require('path');
+  const dotenv = require('dotenv');
 
-dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
+  dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
 
-const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
-const ELEVENLABS_VOICE_ID = process.env.ELEVENLABS_VOICE_ID;
-const OUTPUT_DIR = path.resolve(__dirname, '../output');
+  const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
+  const ELEVENLABS_VOICE_ID = process.env.ELEVENLABS_VOICE_ID;
+  const OUTPUT_DIR = path.resolve(__dirname, '../output');
 
 // Find the most recent story file in the output directory
 async function getLatestStoryFile(): Promise<{ path: string, episodeId: string }> {
@@ -30,7 +30,6 @@ async function getLatestStoryFile(): Promise<{ path: string, episodeId: string }
   const episodeId = latest.replace('-story.txt', '');
   return { path: path.join(OUTPUT_DIR, latest), episodeId };
 }
-
 
 if (!ELEVENLABS_API_KEY || !ELEVENLABS_VOICE_ID) {
   console.error('Missing ELEVENLABS_API_KEY or ELEVENLABS_VOICE_ID in environment.');
@@ -77,3 +76,4 @@ async function generateAudio() {
 }
 
 generateAudio();
+})();

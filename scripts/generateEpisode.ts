@@ -1,4 +1,3 @@
-export {};
 /**
  * generateEpisode.ts
  *
@@ -9,18 +8,19 @@ export {};
  * This script runs the entire episode generation workflow, not just story generation.
  */
 
-const fs = require('fs/promises');
-const path = require('path');
-const { config } = require('dotenv');
-const { OpenAI } = require('openai');
+(async () => {
+  const fs = require('fs/promises');
+  const path = require('path');
+  const { config } = require('dotenv');
+  const { OpenAI } = require('openai');
 
-// Load environment variables
-config({ path: path.resolve(__dirname, '../.env.local') });
+  // Load environment variables
+  config({ path: path.resolve(__dirname, '../.env.local') });
 
-const STORY_PROMPT_FILE = path.resolve(__dirname, '../prompts/story.txt');
-const METADATA_PROMPT_FILE = path.resolve(__dirname, '../prompts/metadata.txt');
-const ARTWORK_PROMPT_FILE = path.resolve(__dirname, '../prompts/artwork.txt');
-const OUTPUT_DIR = path.resolve(__dirname, '../output');
+  const STORY_PROMPT_FILE = path.resolve(__dirname, '../prompts/story.txt');
+  const METADATA_PROMPT_FILE = path.resolve(__dirname, '../prompts/metadata.txt');
+  const ARTWORK_PROMPT_FILE = path.resolve(__dirname, '../prompts/artwork.txt');
+  const OUTPUT_DIR = path.resolve(__dirname, '../output');
 
 // Generate a unique episodeId using full ISO timestamp
 function getEpisodeId(): string {
@@ -180,4 +180,5 @@ async function main(): Promise<void> {
   }
 }
 
-main();
+await main();
+})();

@@ -1,4 +1,3 @@
-export {};
 /**
  * generateMetadata.ts
  *
@@ -7,12 +6,13 @@ export {};
  * Requires OPENAI_API_KEY and OPENAI_MODEL in .env.local.
  */
 
-const fs = require('fs/promises');
-const path = require('path');
-const dotenv = require('dotenv');
-const { OpenAI } = require('openai');
+(async () => {
+  const fs = require('fs/promises');
+  const path = require('path');
+  const dotenv = require('dotenv');
+  const { OpenAI } = require('openai');
 
-dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
+  dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
 
 const OUTPUT_DIR = path.resolve(__dirname, '../output');
 const METADATA_PROMPT_FILE = path.resolve(__dirname, '../prompts/metadata.txt');
@@ -62,3 +62,4 @@ async function generateMetadata() {
 }
 
 generateMetadata();
+})();
