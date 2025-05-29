@@ -1,5 +1,36 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+---
+
+## Key To Sleep Podcast Automation
+
+This project automates the generation of podcast episodes, including:
+- Story/script generation (OpenAI)
+- Metadata/title/description generation (OpenAI)
+- Artwork prompt generation (OpenAI)
+- Audio generation (ElevenLabs TTS)
+- Asset storage in Vercel Blob (audio), and database (metadata)
+- Modular scripts for each step, written in TypeScript
+
+### Modular Scripts
+- `scripts/generateEpisode.ts` — Orchestrates the full episode generation (story, metadata, artwork prompt)
+- `scripts/generateMetadata.ts` — Generates evocative, story-specific metadata and title
+- `scripts/generateArtwork.ts` — Generates artwork prompt for each episode
+- `scripts/generateAudio.ts` — Generates TTS audio from the episode story
+
+### Automation & Integration
+- After each script runs, assets are stored in the output directory
+- Audio is uploaded to Vercel Blob and the blob URL is saved in the DB
+- Metadata is inserted into the DB as a first-class object
+- Local audio files are deleted after upload to save disk space
+
+### TypeScript & Troubleshooting
+- All scripts use `export {};` at the top to avoid block-scoped variable redeclaration errors
+- Run `tsc --noEmit` to check type safety across all scripts
+- If you see TS2451 errors, ensure each script starts with `export {};`
+
+---
+
 ## Getting Started
 
 First, run the development server:

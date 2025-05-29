@@ -1,0 +1,69 @@
+export {};
+/**
+ * generateArtwork.ts
+ *
+ * Script to generate episode artwork prompt using OpenAI (multimodal if supported).
+ * Uses the most recent story and metadata files in the output directory for input and outputs artwork prompt as <episodeId>-artwork-prompt.txt.
+ * Requires OPENAI_API_KEY and OPENAI_MODEL in .env.local.
+ */
+
+const fs = require('fs/promises');
+const path = require('path');
+const dotenv = require('dotenv');
+const { OpenAI } = require('openai');
+
+dotenv.config({ path: path.resolve(__dirname, '../.env.local') });
+
+const OUTPUT_DIR = path.resolve(__dirname, '../output');
+const ARTWORK_PROMPT_FILE = path.resolve(__dirname, '../prompts/artwork.txt');
+const ARTWORK_REFERENCE_DIR = path.resolve(__dirname, '../prompts/reference_artwork');
+
+async function getLatestEpisodeId(): Promise<string> {
+  const files = await fs.readdir(OUTPUT_DIR);
+  const storyFiles = files.filter((f: string) => f.endsWith('-story.txt'));
+  if (storyFiles.length === 0) throw new Error('No story files found in output directory.');
+  storyFiles.sort((a: string, b: string) => b.localeCompare(a));
+  return storyFiles[0].replace('-story.txt', '');
+}
+
+async function readPrompt(filePath: string): Promise<string> {
+  return (await fs.readFile(filePath, 'utf8')).trim();
+}
+
+async function generateArtworkPrompt() {
+  try {
+    const episodeId = await getLatestEpisodeId();
+    const storyText = await fs.readFile(path.join(OUTPUT_DIR, `${episodeId}-story.txt`), 'utf8');
+    const metadataText = await fs.readFile(path.join(OUTPUT_DIR, `${episodeId}-metadata.json`), 'utf8');
+    const artworkPrompt = await readPrompt(ARTWORK_PROMPT_FILE);
+    // Reference artwork images
+    const artworkReferenceFiles = (await fs.readdir(ARTWORK_REFERENCE_DIR)).filter((f: string) => f.match(/\.(png|jpg|jpeg|webp|gif)$/i));
+    let artworkReferencesContent = '';
+    if (artworkReferenceFiles.length > 0) {
+      artworkReferencesContent = 'Here are reference artwork images for inspiration (do not copy directly):\n' +
+        artworkReferenceFiles.map((f: string) => `- prompts/reference_artwork/${f}`).join('\n') + '\n\n';
+    }
+    const combinedArtworkPrompt = `${artworkReferencesContent}${artworkPrompt}`;
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+    const model = process.env.OPENAI_MODEL || 'gpt-4o';
+    const messages = [
+      { role: 'system', content: 'You are a creative visual artist for a podcast.' },
+      { role: 'user', content: combinedArtworkPrompt + '\n' + storyText + '\n' + metadataText }
+    ];
+    const completion = await openai.chat.completions.create({
+      model,
+      messages,
+      max_tokens: 900,
+      temperature: 0.8,
+    });
+    const artworkPromptText = completion.choices[0]?.message.content?.trim() || '';
+    const outputArtworkFile = path.join(OUTPUT_DIR, `${episodeId}-artwork-prompt.txt`);
+    await fs.writeFile(outputArtworkFile, artworkPromptText, 'utf8');
+    console.log(`Artwork prompt saved to ${outputArtworkFile}`);
+  } catch (err) {
+    console.error('Error generating artwork prompt:', err);
+    process.exit(1);
+  }
+}
+
+generateArtworkPrompt();
