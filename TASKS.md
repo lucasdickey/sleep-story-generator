@@ -42,16 +42,16 @@
 
 ### 9. Automation/Orchestration
 
-- [ ] Write GitHub Actions YAML workflow to:
+- [x] Write GitHub Actions YAML workflow to:
   - Run all scripts in sequence daily
   - Pass outputs between steps
   - Redeploy app as needed
-- [ ] Store all secrets (API keys, Voice ID) in GitHub Actions secrets
+- [x] Store all secrets (API keys, Voice ID) in GitHub Actions secrets
 
 ### 10. Testing & Validation
 
-- [ ] Test each script independently
-- [ ] Run full workflow end-to-end in staging
+- [x] Test each script independently
+- [x] Run full workflow end-to-end in staging (via GitHub Actions)
 - [ ] Validate episode appears in web app and RSS feed
 
 ### 11. Launch & Maintenance
