@@ -3,8 +3,11 @@ name: Generate Podcast Episode (2x Daily)
 on:
   schedule:
     # Runs at 00:00 and 12:00 UTC every day
-    - cron: '0 0,12 * * *'
+    - cron: "0 0,12 * * *"
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   generate-episode:
