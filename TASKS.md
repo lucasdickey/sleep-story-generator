@@ -14,23 +14,23 @@
 
 ### 3. Story Generation
 
-- [ ] Script to generate a peaceful story using OpenAI GPT and stochastic prompts
-- [ ] Store generated story for downstream use
+- [x] Script to generate a peaceful story using OpenAI GPT and stochastic prompts
+- [x] Store generated story for downstream use
 
 ### 4. Audio Generation
 
-- [ ] Script to send story text to ElevenLabs API (using Voice ID) for TTS
-- [ ] Save resulting audio file
+- [x] Script to send story text to ElevenLabs API (using Voice ID) for TTS
+- [x] Save resulting audio file
 
 ### 5. Description Generation
 
-- [ ] Script to summarize story into an episode description with episode title using OpenAI
-- [ ] Save episode description
+- [x] Script to summarize story into an episode description with episode title using OpenAI
+- [x] Save episode description
 
 ### 6. Artwork Generation
 
-- [ ] Script to generate unique episode artwork using OpenAI's image model
-- [ ] Save artwork image
+- [x] Script to generate unique episode artwork using OpenAI's image model (now uses gpt-image-1; scripts use async IIFE pattern for compatibility)
+- [x] Save artwork image
 
 ### 7. Asset Storage
 

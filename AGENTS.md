@@ -6,6 +6,8 @@
 - **Backend/API**: Next.js API routes (for serverless functions), or scripts run by GitHub Actions
 - **AI Services**: 
   - OpenAI (for story, description, and artwork generation)
+  - Uses `gpt-image-1` for artwork generation (base64 output, no response_format param)
+  - Uses async IIFE pattern for all automation scripts to avoid build/type errors
   - ElevenLabs (for text-to-speech)
 - **Automation**: GitHub Actions (scheduled workflows)
 - **Secrets Management**: GitHub Actions secrets for all API keys and IDs
