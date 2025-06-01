@@ -40,6 +40,7 @@ This project has evolved from a podcast automation tool to a custom sleep story 
 - Metadata/title/description generation (OpenAI) - can run in parallel
 - Artwork generation (OpenAI) - can run in parallel
 - Audio generation (ElevenLabs TTS) - can run in parallel
+- Enhanced MP3 creation with embedded artwork and metadata
 - Asset storage in S3 with indefinite retention
 
 ### Modular Scripts

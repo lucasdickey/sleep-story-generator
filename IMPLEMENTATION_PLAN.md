@@ -108,8 +108,10 @@ This document outlines the step-by-step implementation plan for transforming the
 - [ ] Upload generated assets to S3
 - [ ] Store URLs in Supabase
 - [ ] Clean up temporary files
+- [ ] Embed artwork into MP3 files using ID3 tags
+- [ ] Extract story title for MP3 metadata
 
-**Checkpoint: Full generation pipeline working**
+**Checkpoint: Full generation pipeline working with enhanced MP3s**
 
 ## Phase 5: Progress Tracking UI (Branch: `feat/progress-tracking`)
 

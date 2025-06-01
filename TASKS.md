@@ -96,6 +96,8 @@
   - [ ] "Download All" button that zips assets
   - [ ] Copyable metadata display
 - [ ] Implement asset zipping functionality
+- [ ] Embed artwork into MP3 files using ID3 tags for enhanced user experience
+- [ ] Add proper MP3 metadata (title, artist, album, genre)
 
 #### 6. Backend API Updates
 
