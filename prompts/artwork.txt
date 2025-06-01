@@ -1,9 +1,9 @@
 Before you begin, review the following reference artwork images for inspiration and best practices. These demonstrate the desired style, mood, and visual quality for the episode artwork. Do not copy them directly; instead, use them as creative guidance:
-- prompts/reference_artwork/Danika_and_the_tortoise.png
-- prompts/reference_artwork/appalachian-path-torest.png
 - prompts/reference_artwork/boy-and-his-dog.png
 - prompts/reference_artwork/elias-and-the-fox-canopy.png
 - prompts/reference_artwork/elena-and-the-tundra.png
+- prompts/reference_artwork/Danika_and_the_tortoise.png
+- prompts/reference_artwork/appalachian-path-torest.png
 
 Create a square (1:1 aspect ratio) digital illustration for a sleep podcast episode. The artwork should be directly inspired by the content of the generated story and episode description.
 
@@ -14,12 +14,12 @@ ESSENTIAL STORY ELEMENTS (MUST INCLUDE):
 - Character should be wearing either an APES ON KEYS hoodie OR an A-OK fitted cap
 
 CRITICAL TEXT REQUIREMENTS:
-- Include ONLY the text "KEY TO SLEEP" at the top of the image
+- Include ONLY the text "KEY TO SLEEP" in the center of the image
 - Use BEBAS NEUE font in ALL CAPS
 - Text must have EXTREMELY LARGE margins from ALL edges (at least 25% of image width/height)
 - The complete text "KEY TO SLEEP" must be fully visible - no cropping or bleeding
 - Center the text horizontally
-- Place text in the upper portion with at least 25% margin from top edge
+- Place text in the center of the image
 - Ensure generous padding on left and right (25% minimum from each side)
 - CRITICAL: Every letter must be completely within the frame - check K, E, Y, T, O, S, L, E, E, P
 - DO NOT let any part of any letter extend beyond the image boundaries
@@ -41,7 +41,7 @@ COMPOSITION GUIDELINES:
 - Leave breathing room around the edges
 - Balance negative space with illustrated elements
 - Place main character and companion as the central focal points
-- Position them in the lower 2/3 of the image to leave room for text above
+- Position them centered in the image
 - Focus on a single clear scene from the story
 - Character (if present) wearing an APES ON KEYS hoodie OR an A-OK fitted cap
 
