@@ -26,12 +26,7 @@ CREATE TABLE IF NOT EXISTS jobs (
     -- Timestamps
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    completed_at TIMESTAMP WITH TIME ZONE,
-    
-    -- Indexes
-    INDEX idx_token (token),
-    INDEX idx_status (status),
-    INDEX idx_created_at (created_at)
+    completed_at TIMESTAMP WITH TIME ZONE
 );
 
 -- Job progress table - tracks individual steps
@@ -46,11 +41,7 @@ CREATE TABLE IF NOT EXISTS job_progress (
     error_message TEXT,
     
     -- Ensure unique step per job
-    UNIQUE(job_id, step),
-    
-    -- Indexes
-    INDEX idx_job_id (job_id),
-    INDEX idx_step_status (step, status)
+    UNIQUE(job_id, step)
 );
 
 -- Generated assets table - stores S3 URLs and metadata
@@ -68,11 +59,16 @@ CREATE TABLE IF NOT EXISTS generated_assets (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     
     -- Ensure one asset per type per job
-    UNIQUE(job_id, asset_type),
-    
-    -- Indexes
-    INDEX idx_job_id_type (job_id, asset_type)
+    UNIQUE(job_id, asset_type)
 );
+
+-- Create indexes separately
+CREATE INDEX IF NOT EXISTS idx_jobs_token ON jobs(token);
+CREATE INDEX IF NOT EXISTS idx_jobs_status ON jobs(status);
+CREATE INDEX IF NOT EXISTS idx_jobs_created_at ON jobs(created_at);
+CREATE INDEX IF NOT EXISTS idx_job_progress_job_id ON job_progress(job_id);
+CREATE INDEX IF NOT EXISTS idx_job_progress_step_status ON job_progress(step, status);
+CREATE INDEX IF NOT EXISTS idx_generated_assets_job_id_type ON generated_assets(job_id, asset_type);
 
 -- Function to update the updated_at timestamp
 CREATE OR REPLACE FUNCTION update_updated_at_column()
