@@ -1,0 +1,8 @@
+Using the script generated above, create the following episode metadata:
+
+- Title: Calming, poetic, and sleep-friendly.
+- Description: One paragraph summarizing the sleep story using inviting, tranquil language. Include the main character's name and describe the emotional and thematic journey. Emphasize how the audio is designed to support sleep, reduce anxiety, and foster emotional calm.
+- Keywords: 10–15 SEO-friendly terms related to sleep, story themes, and nature
+- Voice: A-OK Lucas
+- Music: None / acapella
+- Merch: www.a-ok.shop
