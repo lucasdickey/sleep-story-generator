@@ -4,14 +4,16 @@
 
 - **Frontend**: Next.js (React, Vercel-friendly)
 - **Backend/API**: Next.js API routes (for serverless functions), or scripts run by GitHub Actions
-- **AI Services**: 
+- **AI Services**:
   - OpenAI (for story, description, and artwork generation)
   - Uses `gpt-image-1` for artwork generation (base64 output, no response_format param)
   - Uses async IIFE pattern for all automation scripts to avoid build/type errors
   - ElevenLabs (for text-to-speech)
 - **Automation**: GitHub Actions (scheduled workflows)
 - **Secrets Management**: GitHub Actions secrets for all API keys and IDs
-- **Storage**: Vercel file storage, or optionally, cloud storage (e.g., S3) for generated assets
+- **Storage**: AWS S3 for persistent asset storage with sleep-stories organization
+- **Database**: Supabase for job tracking, progress updates, and asset management
+- **SMS**: Twilio for completion notifications (international support)
 - **Podcast Syndication**: RSS feed generation for podcast platforms
 
 ## Best Practices
