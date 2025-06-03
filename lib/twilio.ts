@@ -60,11 +60,11 @@ export async function sendSMS(
       success: true,
       messageId: result.sid,
     };
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error sending SMS:", error);
     return {
       success: false,
-      error: error.message || "Failed to send SMS",
+      error: error instanceof Error ? error.message : "Failed to send SMS",
     };
   }
 }

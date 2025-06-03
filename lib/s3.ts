@@ -17,13 +17,14 @@ const s3Client = new S3Client({
 const BUCKET_NAME = process.env.AWS_S3_BUCKET_NAME || "key-to-sleep-assets";
 
 // Helper to generate S3 keys with proper structure
+// Uses "sleep-stories" prefix to keep this project's files organized
 export function generateS3Key(
   jobToken: string,
   assetType: string,
   extension: string
 ): string {
   const date = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
-  return `${date}/${jobToken}/${assetType}.${extension}`;
+  return `sleep-stories/${date}/${jobToken}/${assetType}.${extension}`;
 }
 
 // Upload file to S3
@@ -85,7 +86,7 @@ export async function uploadTextToS3(
 export async function uploadJsonToS3(
   jobToken: string,
   assetType: string,
-  content: any
+  content: Record<string, unknown>
 ): Promise<string> {
   const key = generateS3Key(jobToken, assetType, "json");
   const jsonString = JSON.stringify(content, null, 2);

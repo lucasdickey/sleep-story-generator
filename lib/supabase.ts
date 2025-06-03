@@ -43,7 +43,7 @@ export interface GeneratedAsset {
   s3_url: string;
   file_size_bytes?: number;
   mime_type?: string;
-  metadata?: any;
+  metadata?: Record<string, unknown>;
   created_at: string;
 }
 
@@ -131,7 +131,7 @@ export const progressOperations = {
     status: JobProgress["status"],
     errorMessage?: string
   ) {
-    const updateData: any = {
+    const updateData: Record<string, unknown> = {
       status,
       attempt_count: supabaseAdmin
         .from("job_progress")

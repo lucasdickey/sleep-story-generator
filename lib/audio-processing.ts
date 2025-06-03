@@ -1,5 +1,4 @@
 import NodeID3 from "node-id3";
-import fs from "fs";
 import { uploadBinaryToS3 } from "./s3";
 
 // Embed artwork into MP3 file
