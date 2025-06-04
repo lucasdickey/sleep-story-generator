@@ -11,7 +11,7 @@ This project has evolved from a podcast automation tool to a custom sleep story 
   - Story location
   - Values/morals to emphasize (courage, empathy, etc.)
   - All fields have defaults if not specified
-- **Madlib-Style Interface**: Story preview shown as fill-in-the-blank sentence
+- **Interactive Madlib Interface**: Inline click-to-edit fields within story preview text with real-time updates
 - **Simple Payment Flow**: $2 per story generation via Stripe MCP integration
 - **Real-time Progress Updates**: GitHub Actions-style progress UI with polling
 - **SMS Notifications**: Text message alerts when generation is complete (via Twilio)
@@ -19,7 +19,10 @@ This project has evolved from a podcast automation tool to a custom sleep story 
 
 ## Technical Architecture
 
-- **Frontend**: Next.js with Tailwind CSS and react-icons
+- **Frontend**: Next.js with Tailwind CSS v3, TypeScript, and custom components
+  - Interactive inline editing with keyboard navigation
+  - Modern input styling with consistent 40px heights
+  - Custom dropdown styling overriding browser defaults
 - **Payment Processing**: Stripe integration using Model Context Protocol (MCP) for semantic API interactions
 - **Database**: Supabase for job tracking and progress state
 - **SMS Notifications**: Twilio for completion notifications (international numbers, English only)

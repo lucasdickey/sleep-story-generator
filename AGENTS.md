@@ -45,14 +45,27 @@
 - **Branch Per Story**: Start each new "story" (feature, episode, or major change) on a dedicated git branch.
 - **Logical Grouping**: Organize work into logically grouped tasks. After each group, pause to test atomically.
 - **Atomic Testing**: At each critical step, stop and:
-  - Build and run the project locally
-  - Use the Vercel SDK to perform a local production-like build/test
-  - Ensure all tests pass and the feature works as expected
+  - Build and run the project locally (`npm run build`)
+  - Run all linting and type checks (`npm run lint`, `tsc --noEmit`)
+  - Run test suite (`npm run test`)
+  - Ensure all features work as expected in browser
 - **Commit Discipline**: Only after successful atomic testing:
   - Add/commit all relevant files
   - Write a thorough, descriptive commit message
   - Merge the branch (ideally via PR)
 - **Living Documentation**: If any requirements, best practices, or processes change during the work, update AGENTS.md and/or TASKS.md before completing and merging the branch.
+
+## Component Architecture Patterns (Established)
+
+- **Inline Editing**: Use InlineField component pattern for click-to-edit functionality
+  - Consistent 40px heights across all field states to prevent layout shifting
+  - Keyboard navigation support (Enter/Tab/Escape)
+  - Custom styling with gradients and proper focus states
+- **Form Components**: Modular components with clear TypeScript interfaces
+- **Styling Consistency**: Tailwind CSS v3 with custom configuration
+  - Modern input styling with rounded-xl borders and gradients
+  - Custom dropdown appearance overriding browser defaults
+  - Smooth transitions and hover effects throughout
 
 ---
 

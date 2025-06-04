@@ -85,7 +85,7 @@ export function InlineField({
       <button
         onClick={onActivate}
         className={`
-          inline-flex items-center px-3 py-1 rounded-lg border-2 border-dashed transition-all duration-200
+          inline-flex items-center px-3 py-2 rounded-lg border-2 border-dashed transition-all duration-200 font-medium
           ${
             isEmpty
               ? "border-orange-300 text-orange-600 bg-orange-50 hover:bg-orange-100"
@@ -93,9 +93,14 @@ export function InlineField({
           }
           ${isActive ? "ring-2 ring-orange-300" : ""}
         `}
+        style={{ height: "40px" }} // Fixed height to match other fields
       >
         {displayValue}
-        <svg className="w-4 h-4 ml-1" fill="currentColor" viewBox="0 0 20 20">
+        <svg
+          className="w-4 h-4 ml-1 flex-shrink-0"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+        >
           <path
             fillRule="evenodd"
             d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -111,18 +116,25 @@ export function InlineField({
       <button
         onClick={onActivate}
         className={`
-          inline-flex items-center px-2 py-1 rounded-lg border-2 border-dashed transition-all duration-200 hover:scale-105
+          inline-flex items-center px-3 py-2 rounded-lg border-2 border-dashed transition-all duration-200 hover:scale-105 font-medium
           ${
             isEmpty
               ? "border-orange-300 text-orange-600 bg-orange-50 hover:bg-orange-100"
               : "border-orange-400 text-orange-700 bg-orange-100 hover:bg-orange-200"
           }
         `}
-        style={{ minWidth: width === "auto" ? "80px" : width }}
+        style={{
+          minWidth: width === "auto" ? "80px" : width,
+          height: "40px", // Fixed height to match input fields
+        }}
       >
         {displayValue}
         {type === "select" && (
-          <svg className="w-3 h-3 ml-1" fill="currentColor" viewBox="0 0 20 20">
+          <svg
+            className="w-3 h-3 ml-1 flex-shrink-0"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
             <path
               fillRule="evenodd"
               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
@@ -147,8 +159,16 @@ export function InlineField({
           }}
           onBlur={handleBlur}
           onKeyDown={handleKeyDown}
-          className="inline-block px-2 py-1 bg-blue-50 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-blue-700"
-          style={{ minWidth: width === "auto" ? "100px" : width }}
+          className="inline-block px-3 py-2 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl focus:outline-none focus:ring-0 focus:border-blue-500 focus:bg-white text-blue-700 font-medium shadow-sm transition-all duration-200 appearance-none cursor-pointer"
+          style={{
+            minWidth: width === "auto" ? "100px" : width,
+            height: "40px", // Fixed height to match other fields
+            backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
+            backgroundPosition: "right 8px center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "16px",
+            paddingRight: "32px",
+          }}
         >
           <option value="">{placeholder}</option>
           {options.map((option) => (
@@ -170,12 +190,13 @@ export function InlineField({
       onBlur={handleBlur}
       onKeyDown={handleKeyDown}
       placeholder={placeholder}
-      className="inline-block px-2 py-1 bg-blue-50 border-2 border-blue-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-blue-700"
+      className="inline-block px-3 py-2 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl focus:outline-none focus:ring-0 focus:border-blue-500 focus:bg-white text-blue-700 font-medium placeholder-blue-400 shadow-sm transition-all duration-200"
       style={{
         width:
           width === "auto"
             ? `${Math.max(inputValue.length, placeholder.length) + 2}ch`
             : width,
+        height: "40px", // Fixed height to match buttons
       }}
     />
   );

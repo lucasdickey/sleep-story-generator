@@ -270,11 +270,11 @@ export function StoryConfigurationForm() {
             id="hasCompanion"
             checked={config.hasCompanion}
             onChange={(e) => updateConfig("hasCompanion", e.target.checked)}
-            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+            className="w-5 h-5 text-blue-600 bg-white border-2 border-gray-300 rounded-lg focus:ring-0 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 shadow-sm"
           />
           <label
             htmlFor="hasCompanion"
-            className="text-sm font-medium text-gray-700"
+            className="text-sm font-medium text-gray-700 cursor-pointer select-none"
           >
             Include a companion animal in the story
           </label>
