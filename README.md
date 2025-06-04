@@ -1,12 +1,8 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
----
-
-## Key To Sleep - Custom Sleep Story Platform
+# Key To Sleep - Custom Sleep Story Platform
 
 This project has evolved from a podcast automation tool to a custom sleep story generation platform where users can create personalized bedtime stories.
 
-### Platform Features
+## Platform Features
 
 - **Customizable Story Generation**: Users can optionally specify:
   - Character name and age
@@ -15,15 +11,18 @@ This project has evolved from a podcast automation tool to a custom sleep story 
   - Story location
   - Values/morals to emphasize (courage, empathy, etc.)
   - All fields have defaults if not specified
-- **Madlib-Style Interface**: Story preview shown as fill-in-the-blank sentence
+- **Interactive Madlib Interface**: Inline click-to-edit fields within story preview text with real-time updates
 - **Simple Payment Flow**: $2 per story generation via Stripe MCP integration
 - **Real-time Progress Updates**: GitHub Actions-style progress UI with polling
 - **SMS Notifications**: Text message alerts when generation is complete (via Twilio)
 - **No Account Required**: Simple, stateless transactions with token-based asset retrieval
 
-### Technical Architecture
+## Technical Architecture
 
-- **Frontend**: Next.js with Tailwind CSS and react-icons
+- **Frontend**: Next.js with Tailwind CSS v3, TypeScript, and custom components
+  - Interactive inline editing with keyboard navigation
+  - Modern input styling with consistent 40px heights
+  - Custom dropdown styling overriding browser defaults
 - **Payment Processing**: Stripe integration using Model Context Protocol (MCP) for semantic API interactions
 - **Database**: Supabase for job tracking and progress state
 - **SMS Notifications**: Twilio for completion notifications (international numbers, English only)
@@ -34,35 +33,36 @@ This project has evolved from a podcast automation tool to a custom sleep story 
 - **URLs**: Human-readable progress URLs (e.g., `/progress/2025-05-username-abc123`)
 - **Download Experience**: Spotify-style media player with "Download All" zip functionality
 
-### Core Generation Pipeline
+## Core Generation Pipeline
 
 - Story/script generation (OpenAI) - must complete first
 - Metadata/title/description generation (OpenAI) - can run in parallel
 - Artwork generation (OpenAI) - can run in parallel
 - Audio generation (ElevenLabs TTS) - can run in parallel
+- Enhanced MP3 creation with embedded artwork and metadata
 - Asset storage in S3 with indefinite retention
 
-### Modular Scripts
+## Modular Scripts
 
 - `scripts/generateEpisode.ts` — Orchestrates the full episode generation (story, metadata, artwork prompt)
 - `scripts/generateMetadata.ts` — Generates evocative, story-specific metadata and title
 - `scripts/generateArtwork.ts` — Generates artwork prompt for each episode
 - `scripts/generateAudio.ts` — Generates TTS audio from the episode story
 
-### Automation & Integration
+## Automation & Integration
 
 - After each script runs, assets are stored in the output directory
 - Audio is uploaded to Vercel Blob and the blob URL is saved in the DB
 - Metadata is inserted into the DB as a first-class object
 - Local audio files are deleted after upload to save disk space
 
-### TypeScript & Troubleshooting
+## TypeScript & Troubleshooting
 
 - All scripts use `export {};` at the top to avoid block-scoped variable redeclaration errors
 - Run `tsc --noEmit` to check type safety across all scripts
 - If you see TS2451 errors, ensure each script starts with `export {};`
 
-### Implementation
+## Implementation
 
 See [IMPLEMENTATION_PLAN.md](IMPLEMENTATION_PLAN.md) for the detailed development roadmap and branch strategy.
 
