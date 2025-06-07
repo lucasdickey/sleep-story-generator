@@ -17,8 +17,8 @@
 - [x] **Environment Configuration**:
 
   - [x] Create `.env.local` with all required keys
-  - [ ] Set up GitHub Actions secrets for production
-  - [ ] Configure Vercel environment variables
+  - [x] Set up GitHub Actions secrets for production
+  - [x] Configure Vercel environment variables
 
 - [x] **Stripe Integration**:
 
@@ -46,30 +46,32 @@
   - [x] Generation pipeline foundation
   - [x] Comprehensive type definitions and error handling
 
-#### 1. Frontend Development
+#### 1. Frontend Development ✅ **COMPLETED**
 
-- [ ] Create story customization form with optional fields:
-  - [ ] Character name - free form text input with placeholder
-  - [ ] Character age - integer dropdown selector
-  - [ ] Character gender - dropdown (male/female/other)
-  - [ ] Companion toggle - yes/no boolean
-  - [ ] Companion name - free form text (shown only if companion = yes)
-  - [ ] Companion animal - dropdown with 100 child-friendly animals (shown only if companion = yes)
-  - [ ] Location - free form text input with placeholder
-  - [ ] Values/Morals - multi-select tag picker with options: courage, determination, empathy, compassion, ingenuity, motivated, self-sufficient, hopeful
-- [ ] Implement madlib-style preview: "A [gender] named [name] goes on a journey with [companion name] their trusty [companion species] through [location]."
-- [ ] Add default/placeholder values for all fields
-- [ ] Implement "Generate Custom Sleep Story Now" CTA button
-- [ ] Design and build with Tailwind CSS and react-icons
+- [x] Create story customization form with optional fields:
+  - [x] Character name - free form text input with placeholder
+  - [x] Character age - integer dropdown selector
+  - [x] Character gender - dropdown (male/female/other)
+  - [x] Companion toggle - yes/no boolean
+  - [x] Companion name - free form text (shown only if companion = yes)
+  - [x] Companion animal - dropdown with 100 child-friendly animals (shown only if companion = yes)
+  - [x] Location - free form text input with placeholder (implemented as climate + region)
+  - [x] Values/Morals - multi-select tag picker with options: courage, determination, empathy, compassion, ingenuity, motivated, self-sufficient, hopeful
+- [x] Implement madlib-style preview: "A [gender] named [name] goes on a journey with [companion name] their trusty [companion species] through [location]."
+- [x] Add default/placeholder values for all fields
+- [x] Implement "Generate Custom Sleep Story Now" CTA button
+- [x] Design and build with Tailwind CSS and react-icons
 
-#### 2. Payment Integration
+#### 2. Payment Integration ✅ **COMPLETED**
 
-- [ ] Set up Stripe MCP (Model Context Protocol) server
-  - [ ] Install and configure @stripe/mcp
-  - [ ] Create semantic payment flow for $2 transactions
-  - [ ] Implement phone number collection in Stripe checkout (if accessible for Twilio)
-- [ ] Handle payment success/failure states
-- [ ] Generate unique transaction tokens for tracking
+- [x] Set up Stripe MCP (Model Context Protocol) server
+  - [x] Install and configure @stripe/mcp
+  - [x] Create semantic payment flow for $1 transactions (updated from $2)
+  - [x] Implement phone number collection in Stripe checkout with SMS consent
+- [x] Handle payment success/failure states with webhook processing
+- [x] Generate unique transaction tokens for tracking
+- [x] Integrate payment flow with frontend form
+- [x] Create progress page with shareable URLs
 
 #### 3. SMS Notification System
 
@@ -79,18 +81,20 @@
 - [ ] Add proper consent language for SMS notifications
 - [ ] Send completion notification with download links
 
-#### 4. Real-time Progress System
+#### 4. Real-time Progress System ⚡ **PARTIALLY COMPLETED**
 
-- [ ] Create token-based session tracking with human-readable URLs (e.g., `/progress/2025-05-username-abc123`)
-- [ ] Implement polling-based progress updates (check every 2-3 seconds)
-- [ ] Build GitHub Actions-style progress UI with:
-  - [ ] Step list with checkmarks/spinners
-  - [ ] Elapsed time per step
-  - [ ] Current status indicator
-  - [ ] Steps: "Generating story", "Generating metadata", "Generating artwork", "Generating audio"
-- [ ] Display "Approximately 3 minutes" expectation message
-- [ ] Add note that users can close page and wait for SMS
-- [ ] Make progress page URL-shareable (token in URL)
+- [x] Create token-based session tracking with human-readable URLs (e.g., `/progress/2025-05-username-abc123`)
+- [x] Implement polling-based progress updates (check every 2.5 seconds)
+- [x] Build GitHub Actions-style progress UI with:
+  - [x] Step list with checkmarks/spinners
+  - [x] Elapsed time per step
+  - [x] Current status indicator
+  - [x] Steps: "Generating story", "Generating metadata", "Generating artwork", "Generating audio"
+- [x] Display "Approximately 3 minutes" expectation message
+- [x] Add note that users can close page and wait for SMS
+- [x] Make progress page URL-shareable (token in URL)
+- [x] Enhanced error handling with support contact (mailto:apes@a-ok.sh)
+- [ ] **REMAINING:** Connect to actual generation workflow
 
 #### 5. Asset Management Updates
 
@@ -117,12 +121,14 @@
   - [ ] Parallel generation of metadata, artwork, and audio
   - [ ] Keep initial implementation simple, add queues later if needed
 
-#### 7. Error Handling & Reliability
+#### 7. Error Handling & Reliability ⚡ **PARTIALLY COMPLETED**
 
-- [ ] Add comprehensive error handling for failed generations
+- [x] Add comprehensive error handling for failed generations
+- [x] Create customer service contact workflow (mailto:apes@a-ok.sh with pre-filled details)
+- [x] Enhanced error UI with support buttons and debugging information
+- [x] Individual step failure handling with contextual support links
 - [ ] Implement 3x retry mechanism for each generation step
 - [ ] After 3 failed attempts, send SMS via Twilio to contact customer service
-- [ ] Create customer service contact workflow
 - [ ] Log all failures to Supabase for debugging
 
 ### Original Project Tasks (Completed)

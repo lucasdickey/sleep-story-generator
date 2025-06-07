@@ -58,7 +58,7 @@ export default function HomePage() {
                     clipRule="evenodd"
                   />
                 </svg>
-                Only $2
+                Only $1
               </span>
             </div>
           </div>

@@ -12,7 +12,7 @@ This project has evolved from a podcast automation tool to a custom sleep story 
   - Values/morals to emphasize (courage, empathy, etc.)
   - All fields have defaults if not specified
 - **Interactive Madlib Interface**: Inline click-to-edit fields within story preview text with real-time updates
-- **Simple Payment Flow**: $2 per story generation via Stripe MCP integration
+- **Simple Payment Flow**: $1 per story generation via Stripe MCP integration
 - **Real-time Progress Updates**: GitHub Actions-style progress UI with polling
 - **SMS Notifications**: Text message alerts when generation is complete (via Twilio)
 - **No Account Required**: Simple, stateless transactions with token-based asset retrieval
@@ -29,7 +29,7 @@ This project has evolved from a podcast automation tool to a custom sleep story 
 - **Asset Storage**: AWS S3 for persistent storage of generated audio, artwork, and metadata
 - **Real-time Updates**: Polling-based progress tracking (every 2-3 seconds)
 - **Progress UI**: GitHub Actions-style step indicator with elapsed time
-- **Error Handling**: 3x retry mechanism with SMS fallback to customer service
+- **Error Handling**: Comprehensive error handling with support contact (mailto:apes@a-ok.sh)
 - **URLs**: Human-readable progress URLs (e.g., `/progress/2025-05-username-abc123`)
 - **Download Experience**: Spotify-style media player with "Download All" zip functionality
 

@@ -15,6 +15,8 @@
 - **Database**: Supabase for job tracking, progress updates, and asset management
 - **SMS**: Twilio for completion notifications (international support)
 - **Podcast Syndication**: RSS feed generation for podcast platforms
+- **Payment Processing**: Stripe integration with MCP for semantic transactions
+- **Progress Tracking**: Real-time polling-based progress UI with GitHub Actions styling
 
 ## Best Practices
 
@@ -66,6 +68,14 @@
   - Modern input styling with rounded-xl borders and gradients
   - Custom dropdown appearance overriding browser defaults
   - Smooth transitions and hover effects throughout
+- **Payment Integration**: Stripe MCP pattern for semantic payment flows
+  - Phone number collection with SMS consent for notifications
+  - Unique transaction tokens for tracking and progress URLs
+  - Enhanced error handling with pre-populated support contact
+- **Progress Tracking**: Real-time polling with development simulation
+  - GitHub Actions-style step indicators with timing
+  - Graceful fallbacks for configuration issues
+  - User-friendly error states with support contact integration
 
 ---
 
