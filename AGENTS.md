@@ -76,6 +76,12 @@
   - GitHub Actions-style step indicators with timing
   - Graceful fallbacks for configuration issues
   - User-friendly error states with support contact integration
+- **Generation Library**: Comprehensive wrapper functions for AI content generation
+  - Custom story parameters with structured customization interfaces
+  - Progress callback system for real-time database updates
+  - Sequential workflow (story first, then parallel metadata/artwork/audio)
+  - Integrated S3 asset storage and Supabase progress tracking
+  - Comprehensive error handling with retry mechanisms
 
 ---
 
