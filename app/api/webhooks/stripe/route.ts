@@ -144,12 +144,33 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      // TODO: Trigger the generation process
-      // This would typically be done via a queue system or API call
-      // For now, we'll add a placeholder comment
-      console.log(
-        `Payment completed for job ${job.id}, transaction token: ${transactionToken}`
-      );
+      // Trigger the generation process via our API endpoint
+      try {
+        const generationResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_APP_URL}/api/generate-story`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              jobId: job.id,
+              transactionToken: transactionToken,
+            }),
+          }
+        );
+
+        if (!generationResponse.ok) {
+          const errorData = await generationResponse.text();
+          console.error("Failed to trigger generation:", errorData);
+          // Don't throw error - payment was successful, generation can be retried
+        } else {
+          console.log(`Successfully triggered generation for job ${job.id}`);
+        }
+      } catch (error) {
+        console.error("Error triggering generation:", error);
+        // Don't throw error - payment was successful, generation can be retried
+      }
 
       return NextResponse.json({ received: true });
     } catch (error) {
