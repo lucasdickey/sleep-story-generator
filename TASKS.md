@@ -109,7 +109,7 @@
 - [ ] Embed artwork into MP3 files using ID3 tags for enhanced user experience
 - [ ] Add proper MP3 metadata (title, artist, album, genre)
 
-#### 6. Backend API Updates ⚡ **PARTIALLY COMPLETED**
+#### 6. Backend API Updates ✅ **COMPLETED**
 
 - [x] **6A: API Wrapper Functions** - Create generation library with custom parameters
   - [x] Update generation scripts to accept custom parameters
@@ -117,14 +117,14 @@
   - [x] Implement progress callback system for real-time database updates
   - [x] Add comprehensive error handling and retry logic
   - [x] Integrate with S3 asset storage and Supabase database
-- [ ] **6B: Generation API Endpoints** - Expose wrapper functions via API routes
-  - [ ] Create API endpoints for story generation with custom inputs
-  - [ ] Create API endpoints for progress status updates
-  - [ ] Create API endpoints for asset retrieval
-- [ ] **6C: Workflow Integration** - Connect to payment system
-  - [ ] Implement generation workflow (story first, then parallel metadata/artwork/audio)
-  - [ ] Connect Stripe webhook to trigger generation
-  - [ ] Keep initial implementation simple, add queues later if needed
+- [x] **6B: Generation API Endpoints** - Expose wrapper functions via API routes
+  - [x] Create API endpoints for story generation with custom inputs
+  - [x] Enhanced existing progress status API endpoints
+  - [ ] Create API endpoints for asset retrieval (future enhancement)
+- [x] **6C: Workflow Integration** - Connect to payment system
+  - [x] Implement generation workflow (story first, then parallel metadata/artwork/audio)
+  - [x] Connect Stripe webhook to trigger generation
+  - [x] Keep initial implementation simple, add queues later if needed
 
 #### 7. Error Handling & Reliability ⚡ **PARTIALLY COMPLETED**
 
