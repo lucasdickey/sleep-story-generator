@@ -5,6 +5,7 @@ import { progressOperations } from "./supabase";
 import { retryGeneration } from "./retry";
 import fs from "fs/promises";
 import path from "path";
+import { embedMP3Metadata, createStoryMetadata } from "./mp3-metadata";
 
 // Types for story customization
 export interface StoryCustomization {
@@ -385,11 +386,14 @@ export async function generateArtworkFromStory(
 }
 
 /**
- * Generate audio from story text
+ * Generate audio from story text with embedded metadata
  */
 export async function generateAudioFromStory(
   story: GeneratedStory,
-  progressCallback: ProgressCallback
+  progressCallback: ProgressCallback,
+  metadata?: GeneratedMetadata,
+  artworkBuffer?: Buffer,
+  customization?: StoryCustomization
 ): Promise<GeneratedAudio> {
   try {
     await progressCallback("audio_generation", "running");
@@ -430,7 +434,32 @@ export async function generateAudioFromStory(
       );
     }
 
-    const audioBuffer = Buffer.from(await response.arrayBuffer());
+    let audioBuffer = Buffer.from(await response.arrayBuffer());
+
+    // Embed metadata if provided
+    if (metadata) {
+      console.log("Embedding MP3 metadata and artwork...");
+
+      const mp3Metadata = createStoryMetadata(
+        metadata.title,
+        metadata.description,
+        customization
+      );
+
+      // Add artwork if provided
+      if (artworkBuffer) {
+        mp3Metadata.artworkBuffer = artworkBuffer;
+        mp3Metadata.artworkMimeType = "image/png";
+      }
+
+      // Embed the metadata
+      const taggedAudioBuffer = await embedMP3Metadata(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        Buffer.from(audioBuffer) as any,
+        mp3Metadata
+      );
+      audioBuffer = Buffer.from(taggedAudioBuffer);
+    }
 
     // Upload to S3
     const s3Key = `sleep-stories/${story.episodeId}/${story.episodeId}-audio.mp3`;
@@ -495,21 +524,47 @@ export async function generateCompleteStory(
     }
   );
 
-  // Steps 2-4: Generate metadata, artwork, and audio in parallel - with retry
-  const [finalMetadata, artwork, audio] = await Promise.all([
-    retryGeneration("Metadata Generation", () =>
-      generateMetadataFromStory(story, progressCallback)
-    ),
+  // Step 2: Generate metadata first (needed for audio)
+  const finalMetadata = await retryGeneration("Metadata Generation", () =>
+    generateMetadataFromStory(story, progressCallback)
+  );
+
+  // Steps 3-4: Generate artwork and audio in parallel
+  const [artwork, audio] = await Promise.all([
     retryGeneration("Artwork Generation", () =>
-      generateArtworkFromStory(
+      generateArtworkFromStory(story, finalMetadata, progressCallback)
+    ),
+    // Generate audio with metadata for embedding
+    retryGeneration("Audio Generation", async () => {
+      // First check if artwork exists to embed it
+      let artworkBuffer: Buffer | undefined;
+      try {
+        // Try to generate artwork first if not already done
+        const artworkResult = await generateArtworkFromStory(
+          story,
+          finalMetadata,
+          progressCallback
+        );
+
+        // Fetch the artwork buffer for embedding
+        if (artworkResult.imageUrl) {
+          const artworkResponse = await fetch(artworkResult.imageUrl);
+          if (artworkResponse.ok) {
+            artworkBuffer = Buffer.from(await artworkResponse.arrayBuffer());
+          }
+        }
+      } catch (err) {
+        console.warn("Could not fetch artwork for MP3 embedding:", err);
+      }
+
+      return generateAudioFromStory(
         story,
-        { title: "", description: "", episodeId: story.episodeId },
-        progressCallback
-      )
-    ),
-    retryGeneration("Audio Generation", () =>
-      generateAudioFromStory(story, progressCallback)
-    ),
+        progressCallback,
+        finalMetadata,
+        artworkBuffer,
+        customization
+      );
+    }),
   ]);
 
   // Save all assets to database
