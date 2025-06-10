@@ -139,10 +139,13 @@ export const jobOperations = {
   },
 };
 
-// Progress tracking operations - temporarily disabled for build fix
-export const progressOperations = null as unknown; /*{
+// Progress tracking operations
+export const progressOperations = {
   async create(jobId: string, step: JobProgress["step"]) {
-    const { error } = await supabaseAdmin.from("job_progress").insert({
+    const client = getSupabaseAdmin();
+    if (!client) throw new Error("Supabase admin client not configured");
+
+    const { error } = await client.from("job_progress").insert({
       job_id: jobId,
       step,
       status: "pending",
@@ -157,13 +160,12 @@ export const progressOperations = null as unknown; /*{
     status: JobProgress["status"],
     errorMessage?: string
   ) {
+    const client = getSupabaseAdmin();
+    if (!client) throw new Error("Supabase admin client not configured");
+
     const updateData: Record<string, unknown> = {
       status,
-      attempt_count: supabaseAdmin
-        .from("job_progress")
-        .update({ attempt_count: 0 })
-        .eq("job_id", jobId)
-        .eq("step", step),
+      attempt_count: 1, // Simplified for now
     };
 
     if (status === "processing" && !updateData.started_at) {
@@ -178,7 +180,7 @@ export const progressOperations = null as unknown; /*{
       updateData.error_message = errorMessage;
     }
 
-    const { error } = await supabaseAdmin
+    const { error } = await client
       .from("job_progress")
       .update(updateData)
       .eq("job_id", jobId)
@@ -188,7 +190,10 @@ export const progressOperations = null as unknown; /*{
   },
 
   async getByJobId(jobId: string) {
-    const { data: progress, error } = await supabase
+    const client = getSupabase();
+    if (!client) throw new Error("Supabase client not configured");
+
+    const { data: progress, error } = await client
       .from("job_progress")
       .select("*")
       .eq("job_id", jobId)
@@ -197,7 +202,28 @@ export const progressOperations = null as unknown; /*{
     if (error) throw error;
     return progress;
   },
-}; */
+};
 
-// Asset operations - temporarily disabled for build fix
-export const assetOperations = null as unknown;
+// Asset operations
+export const assetOperations = {
+  async create(data: Omit<GeneratedAsset, "id" | "created_at">) {
+    const client = getSupabaseAdmin();
+    if (!client) throw new Error("Supabase admin client not configured");
+
+    const { error } = await client.from("generated_assets").insert(data);
+    if (error) throw error;
+  },
+
+  async getByJobId(jobId: string) {
+    const client = getSupabase();
+    if (!client) throw new Error("Supabase client not configured");
+
+    const { data: assets, error } = await client
+      .from("generated_assets")
+      .select("*")
+      .eq("job_id", jobId);
+
+    if (error) throw error;
+    return assets;
+  },
+};

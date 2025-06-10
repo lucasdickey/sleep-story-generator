@@ -73,13 +73,14 @@
 - [x] Integrate payment flow with frontend form
 - [x] Create progress page with shareable URLs
 
-#### 3. SMS Notification System
+#### 3. SMS Notification System ✅ **COMPLETED**
 
-- [ ] Integrate Twilio for SMS notifications
-- [ ] Support international phone numbers (English messages only)
-- [ ] Capture phone number (from Stripe or separate form)
-- [ ] Add proper consent language for SMS notifications
-- [ ] Send completion notification with download links
+- [x] Integrate Amazon SNS for SMS notifications (instead of Twilio)
+- [x] Support international phone numbers (English messages only)
+- [x] Capture phone number (from Stripe checkout)
+- [x] Add proper consent language for SMS notifications (in Stripe form)
+- [x] Send completion notification with progress links
+- [x] Send error notification on generation failure
 
 #### 4. Real-time Progress System ⚡ **PARTIALLY COMPLETED**
 
@@ -126,15 +127,15 @@
   - [x] Connect Stripe webhook to trigger generation
   - [x] Keep initial implementation simple, add queues later if needed
 
-#### 7. Error Handling & Reliability ⚡ **PARTIALLY COMPLETED**
+#### 7. Error Handling & Reliability ✅ **COMPLETED**
 
 - [x] Add comprehensive error handling for failed generations
 - [x] Create customer service contact workflow (mailto:apes@a-ok.sh with pre-filled details)
 - [x] Enhanced error UI with support buttons and debugging information
 - [x] Individual step failure handling with contextual support links
-- [ ] Implement 3x retry mechanism for each generation step
-- [ ] After 3 failed attempts, send SMS via Twilio to contact customer service
-- [ ] Log all failures to Supabase for debugging
+- [x] Implement 3x retry mechanism for each generation step (with exponential backoff)
+- [x] After 3 failed attempts, send SMS via Amazon SNS to contact customer service
+- [x] Log all failures to Supabase for debugging (via job status updates)
 
 ### Original Project Tasks (Completed)
 

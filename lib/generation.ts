@@ -1,7 +1,8 @@
 import { OpenAI } from "openai";
 import { createClient } from "@supabase/supabase-js";
 import { uploadToS3 } from "./s3";
-// import { progressOperations } from "./supabase"; // Temporarily disabled for build fix
+import { progressOperations } from "./supabase";
+import { retryGeneration } from "./retry";
 import fs from "fs/promises";
 import path from "path";
 
@@ -466,17 +467,16 @@ export async function generateCompleteStory(
 }> {
   const progressCallback: ProgressCallback = async (step, status, error) => {
     try {
-      // TODO: Re-enable when progressOperations import is fixed
+      await progressOperations.updateStatus(
+        jobId,
+        step as "story" | "metadata" | "artwork" | "audio",
+        status as "pending" | "processing" | "completed" | "failed",
+        error
+      );
       console.log(
         `Progress update: ${step} - ${status}`,
         error ? `Error: ${error}` : ""
       );
-      // await progressOperations.updateStatus(
-      //   jobId,
-      //   step as "story" | "metadata" | "artwork" | "audio",
-      //   status as "pending" | "processing" | "completed" | "failed",
-      //   error
-      // );
     } catch (err) {
       console.error("Error updating job progress:", err);
     }
@@ -484,22 +484,32 @@ export async function generateCompleteStory(
 
   console.log(`Starting complete story generation for job ${jobId}`);
 
-  // Step 1: Generate story (must complete first)
-  const story = await generateCustomStory(
-    customization,
-    jobId,
-    progressCallback
+  // Step 1: Generate story (must complete first) - with retry
+  const story = await retryGeneration(
+    "Story Generation",
+    () => generateCustomStory(customization, jobId, progressCallback),
+    async (attempts) => {
+      console.error(
+        `Story generation failed after ${attempts} attempts for job ${jobId}`
+      );
+    }
   );
 
-  // Steps 2-4: Generate metadata, artwork, and audio in parallel
+  // Steps 2-4: Generate metadata, artwork, and audio in parallel - with retry
   const [finalMetadata, artwork, audio] = await Promise.all([
-    generateMetadataFromStory(story, progressCallback),
-    generateArtworkFromStory(
-      story,
-      { title: "", description: "", episodeId: story.episodeId },
-      progressCallback
+    retryGeneration("Metadata Generation", () =>
+      generateMetadataFromStory(story, progressCallback)
     ),
-    generateAudioFromStory(story, progressCallback),
+    retryGeneration("Artwork Generation", () =>
+      generateArtworkFromStory(
+        story,
+        { title: "", description: "", episodeId: story.episodeId },
+        progressCallback
+      )
+    ),
+    retryGeneration("Audio Generation", () =>
+      generateAudioFromStory(story, progressCallback)
+    ),
   ]);
 
   // Save all assets to database

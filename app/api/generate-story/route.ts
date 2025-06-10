@@ -94,11 +94,20 @@ export async function POST(request: NextRequest) {
 
         console.log(`Story generation completed for job ${job.id}`);
 
-        // TODO: Send SMS notification if customer consented
+        // Send SMS notification if customer consented
         if (job.sms_consent && job.customer_phone) {
-          console.log(
-            `Would send SMS to ${job.customer_phone} for job ${job.id}`
-          );
+          try {
+            const { sendCompletionNotification } = await import("@/lib/sns");
+            await sendCompletionNotification(
+              job.customer_phone,
+              job.transaction_token
+            );
+            console.log(
+              `SMS notification sent to ${job.customer_phone} for job ${job.id}`
+            );
+          } catch (smsError) {
+            console.error("Failed to send SMS notification:", smsError);
+          }
         }
       } catch (error) {
         console.error(`Generation failed for job ${job.id}:`, error);
@@ -113,6 +122,22 @@ export async function POST(request: NextRequest) {
             completed_at: new Date().toISOString(),
           })
           .eq("id", job.id);
+
+        // Send SMS error notification if customer consented
+        if (job.sms_consent && job.customer_phone) {
+          try {
+            const { sendErrorNotification } = await import("@/lib/sns");
+            await sendErrorNotification(
+              job.customer_phone,
+              job.transaction_token
+            );
+            console.log(
+              `Error SMS notification sent to ${job.customer_phone} for job ${job.id}`
+            );
+          } catch (smsError) {
+            console.error("Failed to send error SMS notification:", smsError);
+          }
+        }
       }
     });
 
