@@ -513,7 +513,7 @@ export async function generateCompleteStory(
 
   console.log(`Starting complete story generation for job ${jobId}`);
 
-  // Step 1: Generate story (must complete first) - with retry
+  // Step 1: Generate story (must complete first)
   const story = await retryGeneration(
     "Story Generation",
     () => generateCustomStory(customization, jobId, progressCallback),
@@ -524,48 +524,43 @@ export async function generateCompleteStory(
     }
   );
 
-  // Step 2: Generate metadata first (needed for audio)
+  // Step 2: Generate metadata (needed for artwork and audio)
   const finalMetadata = await retryGeneration("Metadata Generation", () =>
     generateMetadataFromStory(story, progressCallback)
   );
 
-  // Steps 3-4: Generate artwork and audio in parallel
-  const [artwork, audio] = await Promise.all([
-    retryGeneration("Artwork Generation", () =>
-      generateArtworkFromStory(story, finalMetadata, progressCallback)
-    ),
-    // Generate audio with metadata for embedding
-    retryGeneration("Audio Generation", async () => {
-      // First check if artwork exists to embed it
-      let artworkBuffer: Buffer | undefined;
-      try {
-        // Try to generate artwork first if not already done
-        const artworkResult = await generateArtworkFromStory(
-          story,
-          finalMetadata,
-          progressCallback
+  // Step 3: Generate artwork
+  const artwork = await retryGeneration("Artwork Generation", () =>
+    generateArtworkFromStory(story, finalMetadata, progressCallback)
+  );
+
+  // Step 4: Fetch artwork buffer for embedding
+  let artworkBuffer: Buffer | undefined;
+  if (artwork.imageUrl) {
+    try {
+      const artworkResponse = await fetch(artwork.imageUrl);
+      if (artworkResponse.ok) {
+        artworkBuffer = Buffer.from(await artworkResponse.arrayBuffer());
+      } else {
+        console.warn(
+          `Failed to fetch artwork for embedding: ${artworkResponse.statusText}`
         );
-
-        // Fetch the artwork buffer for embedding
-        if (artworkResult.imageUrl) {
-          const artworkResponse = await fetch(artworkResult.imageUrl);
-          if (artworkResponse.ok) {
-            artworkBuffer = Buffer.from(await artworkResponse.arrayBuffer());
-          }
-        }
-      } catch (err) {
-        console.warn("Could not fetch artwork for MP3 embedding:", err);
       }
+    } catch (err) {
+      console.warn("Could not fetch artwork for MP3 embedding:", err);
+    }
+  }
 
-      return generateAudioFromStory(
-        story,
-        progressCallback,
-        finalMetadata,
-        artworkBuffer,
-        customization
-      );
-    }),
-  ]);
+  // Step 5: Generate audio with embedded metadata and artwork
+  const audio = await retryGeneration("Audio Generation", () =>
+    generateAudioFromStory(
+      story,
+      progressCallback,
+      finalMetadata,
+      artworkBuffer,
+      customization
+    )
+  );
 
   // Save all assets to database
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
