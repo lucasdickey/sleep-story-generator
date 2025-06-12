@@ -1,0 +1,37 @@
+# Build artifacts
+.next/
+node_modules/
+.vercel/
+
+# Development files
+.env.local
+.env*.local
+*.log
+
+# Cache files
+.cache/
+tsconfig.tsbuildinfo
+
+# IDE files
+.vscode/
+.cursor/
+.DS_Store
+
+# Output directory
+output/
+
+# Test files
+test/
+coverage/
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# Development scripts
+scripts/
+runbooks/
+
+# Source maps
+*.map 
