@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Minimal configuration
   reactStrictMode: true,
+  experimental: {
+    forceSwcTransforms: true,
+  },
 };
 
 export default nextConfig;
