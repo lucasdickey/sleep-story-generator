@@ -1,3 +1,5 @@
+import { StoryConfigurationForm } from "@/components/StoryConfigurationForm";
+
 export default function HomePage() {
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50">
@@ -13,6 +15,8 @@ export default function HomePage() {
               Create a personalized bedtime story crafted just for your child
             </p>
           </div>
+          
+          <StoryConfigurationForm />
         </div>
       </div>
     </main>
