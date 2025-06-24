@@ -159,6 +159,7 @@ export function StoryConfigurationForm() {
           onActivate={() => setActiveField("characterName")}
           onDeactivate={() => setActiveField(null)}
           type="text"
+          width="180px"
         />
         {", "}
         {config.characterAge ? (
@@ -205,6 +206,7 @@ export function StoryConfigurationForm() {
           onDeactivate={() => setActiveField(null)}
           type="select"
           options={genderOptions}
+          width="100px"
         />
         {config.hasCompanion && (
           <>
@@ -217,6 +219,7 @@ export function StoryConfigurationForm() {
               onActivate={() => setActiveField("companionName")}
               onDeactivate={() => setActiveField(null)}
               type="text"
+              width="170px"
             />
             {" the "}
             <InlineField
@@ -231,6 +234,7 @@ export function StoryConfigurationForm() {
                 value: animal,
                 label: animal,
               }))}
+              width="140px"
             />
           </>
         )}
@@ -244,6 +248,7 @@ export function StoryConfigurationForm() {
           onDeactivate={() => setActiveField(null)}
           type="select"
           options={climateOptions}
+          width="120px"
         />
         {" of "}
         <InlineField
@@ -255,6 +260,7 @@ export function StoryConfigurationForm() {
           onDeactivate={() => setActiveField(null)}
           type="select"
           options={regionOptions}
+          width="180px"
         />
         {" on a journey where they learn the value of "}
         <InlineField
@@ -265,6 +271,7 @@ export function StoryConfigurationForm() {
           onActivate={() => setActiveField("values")}
           onDeactivate={() => setActiveField(null)}
           type="custom"
+          width="280px"
         />
         {"."}
       </div>
