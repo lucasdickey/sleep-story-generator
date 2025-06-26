@@ -265,13 +265,13 @@ export function StoryConfigurationForm() {
         {" on a journey where they learn the value of "}
         <InlineField
           value={config.values.join(", ")}
-          placeholder="values & life lessons"
+          placeholder="values"
           onUpdate={() => {}} // Handled by ValuesSelector
           isActive={activeField === "values"}
           onActivate={() => setActiveField("values")}
           onDeactivate={() => setActiveField(null)}
           type="custom"
-          width="280px"
+          width="auto"
         />
         {"."}
       </div>

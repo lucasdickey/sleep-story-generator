@@ -16,4 +16,4 @@ Instructions:
 - Write in the voice of a solo male narrator with a grounded, soothing tone.
 - Do not include any references to music or sound effects when generating the script.
 
-Output: A 20-minute sleep story script (approximately 2,500–3,000 words).
+Output: A 15-minute sleep story script (approximately 2200 words). This length is crucial for a complete and satisfying story. Do not generate a story shorter than 1,300 words.

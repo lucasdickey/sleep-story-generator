@@ -93,11 +93,11 @@ export function InlineField({
           }
           ${isActive ? "ring-2 ring-orange-300" : ""}
         `}
-        style={{ 
-          width: width === "auto" ? "120px" : width,
+        style={{
+          width: width === "auto" ? undefined : width,
           height: "40px",
           boxSizing: "border-box",
-          lineHeight: "20px"
+          lineHeight: "20px",
         }}
       >
         {displayValue}
@@ -155,7 +155,10 @@ export function InlineField({
 
   if (type === "select") {
     return (
-      <div className="inline-block relative" style={{ width: width === "auto" ? "100px" : width }}>
+      <div
+        className="inline-block relative"
+        style={{ width: width === "auto" ? "100px" : width }}
+      >
         <select
           ref={selectRef}
           value={inputValue}
@@ -204,7 +207,7 @@ export function InlineField({
         width: width === "auto" ? "80px" : width,
         height: "40px",
         boxSizing: "border-box",
-        lineHeight: "20px"
+        lineHeight: "20px",
       }}
     />
   );
