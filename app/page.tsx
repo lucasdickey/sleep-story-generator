@@ -11,9 +11,13 @@ export default function HomePage() {
                 Key To Sleep
               </span>
             </h1>
-            <p className="text-xl text-gray-600">
-              Create a personalized bedtime story crafted just for your child —
-              only $1.00
+            <p className="text-l font-semibold text-gray-600">
+              Create a personalized bedtime audio story crafted just for your
+              child
+            </p>
+            <p className="text-l text-gray-600">
+              ~10-minute audio story taking your child on a journey to slumber.
+              Only $1.00 per story.
             </p>
           </div>
 
