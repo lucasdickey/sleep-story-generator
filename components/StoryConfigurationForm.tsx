@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InlineField } from "./InlineField";
 import { ValuesSelector } from "./ValuesSelector";
 
@@ -106,6 +106,44 @@ export function StoryConfigurationForm() {
   const [config, setConfig] = useState<StoryConfig>(defaultConfig);
   const [activeField, setActiveField] = useState<string | null>(null);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
+
+  // Validate form whenever config changes
+  useEffect(() => {
+    const validate = () => {
+      const {
+        characterName,
+        characterAge,
+        characterGender,
+        climate,
+        region,
+        values,
+        hasCompanion,
+        companionName,
+        companionAnimal,
+      } = config;
+
+      // Basic fields
+      if (
+        !characterName ||
+        !characterAge ||
+        !characterGender ||
+        !climate ||
+        !region ||
+        values.length === 0
+      ) {
+        return false;
+      }
+
+      // Companion fields (if enabled)
+      if (hasCompanion && (!companionName || !companionAnimal)) {
+        return false;
+      }
+
+      return true;
+    };
+    setIsFormValid(validate());
+  }, [config]);
 
   // Update a field in the configuration
   const updateConfig = (
@@ -159,6 +197,7 @@ export function StoryConfigurationForm() {
           onActivate={() => setActiveField("characterName")}
           onDeactivate={() => setActiveField(null)}
           type="text"
+          width="180px"
         />
         {", "}
         {config.characterAge ? (
@@ -205,6 +244,7 @@ export function StoryConfigurationForm() {
           onDeactivate={() => setActiveField(null)}
           type="select"
           options={genderOptions}
+          width="100px"
         />
         {config.hasCompanion && (
           <>
@@ -217,6 +257,7 @@ export function StoryConfigurationForm() {
               onActivate={() => setActiveField("companionName")}
               onDeactivate={() => setActiveField(null)}
               type="text"
+              width="170px"
             />
             {" the "}
             <InlineField
@@ -231,6 +272,7 @@ export function StoryConfigurationForm() {
                 value: animal,
                 label: animal,
               }))}
+              width="140px"
             />
           </>
         )}
@@ -244,6 +286,7 @@ export function StoryConfigurationForm() {
           onDeactivate={() => setActiveField(null)}
           type="select"
           options={climateOptions}
+          width="120px"
         />
         {" of "}
         <InlineField
@@ -255,16 +298,18 @@ export function StoryConfigurationForm() {
           onDeactivate={() => setActiveField(null)}
           type="select"
           options={regionOptions}
+          width="180px"
         />
         {" on a journey where they learn the value of "}
         <InlineField
           value={config.values.join(", ")}
-          placeholder="values & life lessons"
+          placeholder="values"
           onUpdate={() => {}} // Handled by ValuesSelector
           isActive={activeField === "values"}
           onActivate={() => setActiveField("values")}
           onDeactivate={() => setActiveField(null)}
           type="custom"
+          width="auto"
         />
         {"."}
       </div>
@@ -341,39 +386,46 @@ export function StoryConfigurationForm() {
 
       {/* Generate Button */}
       <div className="text-center">
-        <button
-          className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
-          onClick={handlePayment}
-          disabled={isProcessingPayment}
-        >
-          {isProcessingPayment ? (
-            <span className="flex items-center gap-2">
-              <svg
-                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
-              Processing...
-            </span>
-          ) : (
-            "Generate Custom Sleep Story Now - $1"
+        <div className="relative inline-block md:group">
+          <button
+            className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white font-bold py-4 px-8 rounded-xl text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+            onClick={handlePayment}
+            disabled={isProcessingPayment || !isFormValid}
+          >
+            {isProcessingPayment ? (
+              <span className="flex items-center gap-2">
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+                Processing...
+              </span>
+            ) : (
+              "Generate Custom Sleep Story Now - $1"
+            )}
+          </button>
+          {!isFormValid && !isProcessingPayment && (
+            <div className="hidden md:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max whitespace-nowrap px-3 py-1.5 bg-gray-900 text-white text-sm rounded-md opacity-0 md:group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+              Please complete all fields to generate your story.
+            </div>
           )}
-        </button>
+        </div>
         <p className="text-sm text-gray-500 mt-3">
           ⚡ Ready in approximately 3 minutes • 📱 SMS notification when
           complete
