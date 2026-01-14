@@ -185,7 +185,7 @@ export async function generateCustomStory(
         },
       ],
       temperature: 0.8,
-      max_tokens: 1800,
+      max_tokens: 2500,
     });
 
     const rawStory = completion.choices[0]?.message.content?.trim() || "";

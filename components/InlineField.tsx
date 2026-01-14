@@ -85,7 +85,7 @@ export function InlineField({
       <button
         onClick={onActivate}
         className={`
-          inline-flex items-center px-3 py-2 rounded-lg border-2 border-dashed transition-all duration-200 font-medium
+          inline-flex items-center px-3 py-2 rounded-xl border-2 border-dashed transition-all duration-200 font-medium
           ${
             isEmpty
               ? "border-orange-300 text-orange-600 bg-orange-50 hover:bg-orange-100"
@@ -93,7 +93,12 @@ export function InlineField({
           }
           ${isActive ? "ring-2 ring-orange-300" : ""}
         `}
-        style={{ height: "40px" }} // Fixed height to match other fields
+        style={{
+          width: width === "auto" ? undefined : width,
+          height: "40px",
+          boxSizing: "border-box",
+          lineHeight: "20px",
+        }}
       >
         {displayValue}
         <svg
@@ -116,7 +121,7 @@ export function InlineField({
       <button
         onClick={onActivate}
         className={`
-          inline-flex items-center px-3 py-2 rounded-lg border-2 border-dashed transition-all duration-200 hover:scale-105 font-medium
+          inline-flex items-center px-3 py-2 rounded-xl border-2 border-dashed transition-all duration-200 font-medium
           ${
             isEmpty
               ? "border-orange-300 text-orange-600 bg-orange-50 hover:bg-orange-100"
@@ -124,8 +129,10 @@ export function InlineField({
           }
         `}
         style={{
-          minWidth: width === "auto" ? "80px" : width,
-          height: "40px", // Fixed height to match input fields
+          width: width === "auto" ? "80px" : width,
+          height: "40px",
+          boxSizing: "border-box",
+          lineHeight: "20px",
         }}
       >
         {displayValue}
@@ -148,7 +155,10 @@ export function InlineField({
 
   if (type === "select") {
     return (
-      <div className="inline-block relative">
+      <div
+        className="inline-block relative"
+        style={{ width: width === "auto" ? "100px" : width }}
+      >
         <select
           ref={selectRef}
           value={inputValue}
@@ -161,8 +171,10 @@ export function InlineField({
           onKeyDown={handleKeyDown}
           className="inline-block px-3 py-2 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl focus:outline-none focus:ring-0 focus:border-blue-500 focus:bg-white text-blue-700 font-medium shadow-sm transition-all duration-200 appearance-none cursor-pointer"
           style={{
-            minWidth: width === "auto" ? "100px" : width,
-            height: "40px", // Fixed height to match other fields
+            width: width === "auto" ? "100px" : width,
+            height: "40px",
+            boxSizing: "border-box",
+            lineHeight: "20px",
             backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
             backgroundPosition: "right 8px center",
             backgroundRepeat: "no-repeat",
@@ -192,11 +204,10 @@ export function InlineField({
       placeholder={placeholder}
       className="inline-block px-3 py-2 bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-300 rounded-xl focus:outline-none focus:ring-0 focus:border-blue-500 focus:bg-white text-blue-700 font-medium placeholder-blue-400 shadow-sm transition-all duration-200"
       style={{
-        width:
-          width === "auto"
-            ? `${Math.max(inputValue.length, placeholder.length) + 2}ch`
-            : width,
-        height: "40px", // Fixed height to match buttons
+        width: width === "auto" ? "80px" : width,
+        height: "40px",
+        boxSizing: "border-box",
+        lineHeight: "20px",
       }}
     />
   );

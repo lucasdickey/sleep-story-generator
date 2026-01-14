@@ -1,0 +1,21 @@
+{
+  "name": "Key To Sleep",
+  "short_name": "Key To Sleep",
+  "description": "Create personalized bedtime stories crafted just for your child",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#9333ea",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -14,7 +14,12 @@
       "Bash(git fetch:*)",
       "Bash(find:*)",
       "Bash(grep:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(npm run dev:*)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "Bash(sed:*)",
+      "Bash(kill:*)"
     ],
     "deny": []
   }
